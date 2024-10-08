@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Black Myth: Wukong - trò chơi hành động nhập vai dựa trên truyền thuyết Tây Du Ký.">
+    <title>Black Myth: Wukong</title>
+    
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+       
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+       
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            z-index: 10;
+            background-color: transparent; 
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        header nav ul li {
+            display: block;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: color 0.3s, text-decoration 0.3s;
+            font-family: 'Cinzel', serif; 
+        }
+
+        header nav ul li a:hover {
+            color: #f0c75e; 
+            text-decoration: underline;
+        }
+
+        
+        .banner-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+        }
+
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5); 
+        }
+
+        
+        .overlay h1 {
+            font-size: 5em;
+            margin-bottom: 10px;
+            font-family: 'Cinzel', serif; 
+            text-transform: uppercase;
+            color: #e0c489; 
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
+            letter-spacing: 5px;
+        }
+
+        .overlay p {
+            font-size: 2.5em;
+            color: #cbb279; 
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
+            margin-bottom: 30px;
+        }
+
+       
+        .overlay a {
+            display: inline-block;
+            padding: 20px 50px;
+            background: linear-gradient(45deg, #c4902e, #e8c08e);
+            color: black;
+            font-size: 2em;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            border-radius: 5px;
+            border: 2px solid #a77e43;
+            transition: background 0.3s, border 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+            text-decoration: none;
+        }
+
+        .overlay a:hover {
+            background: linear-gradient(45deg, #e8c08e, #c4902e);
+            border: 2px solid #fff;
+            color: black;
+        }
+
+        
+        .main-content {
+            padding: 80px 40px; 
+            background-color: #111;
+            color: white;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+
+        .main-content p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .main-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+       
+        .slider {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .slides {
+            display: none;
+        }
+
+        .slider img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%; 
+            width: auto;
+            padding: 16px;
+            margin-top: -22px; 
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 10; 
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+       
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            header nav ul {
+                gap: 15px;
+            }
+
+            header nav ul li a {
+                font-size: 1em;
+            }
+
+            .overlay h1 {
+                font-size: 3em;
+                letter-spacing: 2px;
+            }
+
+            .overlay p {
+                font-size: 1.5em;
+            }
+
+            .overlay a {
+                padding: 15px 30px;
+                font-size: 1.5em;
+            }
+
+            .main-content {
+                padding: 60px 20px;
+            }
+
+            .main-content h2 {
+                font-size: 2em;
+            }
+
+            .main-content p {
+                font-size: 1em;
+            }
+
+            .slider {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#news">NEWS</a></li>
+                <li><a href="#overview">OVERVIEW</a></li>
+                <li><a href="#media">MEDIA</a></li>
+                <li><a href="#support">PLAYER SUPPORT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    
+    <div class="banner-container" id="home">
+        <video autoplay muted loop>
+            <source src="Video chưa đặt tên ‐ Được tạo bằng Clipchamp.mp4" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ thẻ video.
+        </video>
+
+      
+        <div class="overlay">
+            <h1>Black Myth: Wukong</h1>
+            <p>Confront Destiny - August 20, 2024</p>
+            <a href="#">Buy Now</a>
+        </div>
+    </div>
+
+    
+    <div class="main-content" id="overview">
+        <h2>News</h2>
+        
+        <img src="Screenshot 2024-10-01 105917.png" alt="Hình ảnh giới thiệu trò chơi">
+    </div>
+
+   
+    <div class="main-content" id="news">
+        <h2>Player</h2>
+        
+        <img src="Screenshot 2024-10-01 110105.png" alt="Hình ảnh nhân vật">
+    </div>
+
+  
+    <div class="main-content" id="media">
+        <h2>Media</h2>
+      
+        <img src="Screenshot 2024-10-01 104634.png" alt="Hình ảnh đồ họa trò chơi">
+    </div>
+
+   
+    <div class="main-content" id="support">
+        <h2>Support</h2>
+        <div class="slider">
+            <div class="slides">
+                <img src="hi1.png" alt="Hình ảnh hỗ trợ 1">
+            </div>
+            <div class="slides">
+                <img src="hi2.png" alt="Hình ảnh hỗ trợ 2">
+            </div>
+            <div class="slides">
+                <img src="hi.png" alt="Hình ảnh hỗ trợ 3">
+            </div>
+            <div class="slides">
+                <img src="hi4.png" alt="Hình ảnh hỗ trợ 4">
+            </div>
+
+            
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+    </div>
+
+    
+    <footer>
+        <p>&copy; 2024 Black Myth: Wukong. All rights reserved.</p>
+    </footer>
+
+    <script>
+       
+        let slideIndex = 0;
+        showSlides();
+
+        function plusSlides(n) {
+            slideIndex += n;
+            showSlides();
+        }
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("slides");
+            if (slideIndex >= slides.length) {
+                slideIndex = 0;
+            }
+            if (slideIndex < 0) {
+                slideIndex = slides.length - 1;
+            }
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex].style.display = "block";
+        }
+
+        
+        setInterval(function() {
+            plusSlides(1);
+        }, 5000); 
+    </script>
+
+</body>
+</html>
